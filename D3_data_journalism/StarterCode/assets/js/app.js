@@ -22,7 +22,7 @@ var svg = d3.select("scatter")
     .attr("height", svgHeight); 
 
 // append group are and set its margins 
-var ChartGroup = svg.append("g")
+var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 var file = "StarterCode/assets/data/data.csv" 
@@ -43,6 +43,23 @@ d3.csv(file).then(function(CensusData) {
         .range([height, 0]);
 
     // Creates axes 
-    
+    var xAxis = d3.axisBottom(xLinearScale).ticks(10);
+    var yAxis = d3.axisLeft(yLinearScale).ticks(10);
 
+    // append axes 
+    chartGroup.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(xAxis);
+
+    chartGroup.append("g")
+        .call(yAxis);
+    
+    // Create the circles
+
+    // Add the state labels to the circles 
+
+    // Create labels for the axes 
+
+    // Initialize tooltip
+    
 });

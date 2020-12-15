@@ -26,4 +26,23 @@ var ChartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 var file = "StarterCode/assets/data/data.csv" 
-d3.csv(file)
+d3.csv(file).then(function(CensusData) {
+
+    CensusData.forEach(function(data) {
+        data.healthcare = +data.healthcare;
+        data.obesity = +data.obesity;
+    });
+
+    // Create scale functions 
+    var xLinearScale = d3.scaleLinear()
+        .domain(d3.extent(CensusData, d => d.healthcare))
+        .range([0, width]);
+
+    var yLinearScale = d3.scaleLinear()
+        .domain([0, d3.max(CensusData, d => d.obesity)])
+        .range([height, 0]);
+
+    // Creates axes 
+    
+
+});

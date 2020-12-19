@@ -25,8 +25,8 @@ var svg = d3.select("scatter")
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-var file = "StarterCode/assets/data/data.csv" 
-d3.csv(file).then(function(CensusData) {
+
+d3.csv("data.csv").then(function(CensusData) {
 
     CensusData.forEach(function(data) {
         data.healthcare = +data.healthcare;
@@ -59,8 +59,8 @@ d3.csv(file).then(function(CensusData) {
         .data(CensusData)
         .enter() 
         .append("Circle")
-        .attr("cx". d => xLinearScale(d.healthcare))
-        .attr("cy", d +> yLinearSCale(d.obesity)) 
+        .attr("cx", d => xLinearScale(d.healthcare))
+        .attr("cy", d => yLinearSCale(d.obesity)) 
         .attr("r", "10") 
         .attr("fill", "blue")
         .attr("opacity", "0.5");
@@ -99,5 +99,17 @@ d3.csv(file).then(function(CensusData) {
         .text("Obesity Rate (%)");
 
     // Initialize tooltip
-    
+    var toolTip = d3.tip() 
+        .attr("class", "tooltip") 
+        .offset([80, -60]) 
+        .html(function(d) {
+            return (abbr + '%');
+        });
+
+    // Create tooltip in the chart 
+    chartGroup.call(toolTip); 
+    CirclesGroup.on("click", function(data) {
+        toolTip.hide(data);
     });
+});
+    makeResponsive();

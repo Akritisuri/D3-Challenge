@@ -57,11 +57,47 @@ d3.csv(file).then(function(CensusData) {
     // Create the circles 
     var CirclesGroup = chartGroup.selectAll("Circle")
         .data(CensusData)
+        .enter() 
+        .append("Circle")
+        .attr("cx". d => xLinearScale(d.healthcare))
+        .attr("cy", d +> yLinearSCale(d.obesity)) 
+        .attr("r", "10") 
+        .attr("fill", "blue")
+        .attr("opacity", "0.5");
 
     // Add the state labels to the circles 
+    var CircleLabels = chartGroup.selectAll(null).data(CensusData).enter().append("text"); 
 
     // Create labels for the axes 
+    CircleLabels
+        .attr("x", function(d) {
+            return xLinearScale(d.poverty);
+        })
+        .attr("y", function(d) {
+            return yLinearScale(d.healthcare);
+        })
+        .text(function(d) {
+            return d.abbr;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "10px")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white");
+
+    // Create axes labels
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 40)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("class", "axisText")
+        .text("Lacks Healthcare (%)");
+
+    chartGroup.append("text")
+        .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+        .attr("class", "axisText")
+        .text("In Poverty (%)");
 
     // Initialize tooltip
     
-});
+    });

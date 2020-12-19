@@ -112,17 +112,13 @@ function makeResponsive() {
             .attr("class", "tooltip") 
             .offset([80, -60]) 
             .html(function(d) {
-                return (abbr + '%');
+                return (`${d.healthcare}<br> Healthcare: ${d.healthcare}<br>Obesity: ${d.obesity}`);
             });
     
         // Create tooltip in the chart 
         chartGroup.call(toolTip); 
         CirclesGroup.on("click", function(data) {
             toolTip.show(data, this);
-        })
-
-        .on("mouseout", function(data, index) {
-            toolTip.hide(data);
         })
     });
     

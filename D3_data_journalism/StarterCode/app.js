@@ -1,15 +1,14 @@
 function makeResponsive() {
-    // @TODO: YOUR CODE HERE!
-    
-    var svgWidth = 900;
-    var svgHeight = 500;
+   
+    var svgWidth = 1000;
+    var svgHeight = 700;
     
     // Set the margins 
     var margin = { 
-        top: 60,
-        right: 60, 
-        bottom: 60, 
-        left: 60
+        top: 20,
+        right: 40, 
+        bottom: 200, 
+        left: 120
     };
     
     // Define the dimensions 
@@ -17,10 +16,19 @@ function makeResponsive() {
     var chartHeight = svgHeight - margin.top - margin.bottom; 
     
     // Select the body, append SVG area, and set dimensions 
+    var svg = d3
+        .select(".chart")
+        .append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight);
+
+
     var svg = d3.select("#scatter")
         .append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight); 
+
+
     
     // append group are and set its margins 
     var chartGroup = svg.append("g")
@@ -45,24 +53,24 @@ function makeResponsive() {
     
         // Creates axes 
         var xAxis = d3.axisBottom(xLinearScale);
-        var yAxis = d3.axisLeft(yLinearScale);
+        var yAxis = d3.axisLeft(yLinearScale).ticks(10);
     
         // append axes 
         chartGroup.append("g")
-            .attr("transform", `translate(0, ${svgHeight})`)
+            .attr("transform", `translate(0, 600)`)
             .call(xAxis);
-    
+
         chartGroup.append("g")
             .call(yAxis);
-        
+
         // Create the circles 
         var CirclesGroup = chartGroup.selectAll("Circle")
             .data(CensusData)
             .enter() 
-            .append("Circle")
+            .append("circle")
             .attr("cx", d => xLinearScale(d.healthcare))
             .attr("cy", d => yLinearScale(d.obesity)) 
-            .attr("r", "10") 
+            .attr("r", "15") 
             .attr("fill", "blue")
             .attr("opacity", "0.5");
     
@@ -85,17 +93,17 @@ function makeResponsive() {
             .attr("text-anchor", "middle")
             .attr("fill", "white");
     
-        // Create axes labels
+ 
         chartGroup.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 40)
+            .attr("y", 0 - margin.left + 20)
             .attr("x", 0 - (svgHeight / 2))
             .attr("dy", "1em")
             .attr("class", "axisText")
             .text("Lacks Healthcare (%)");
     
         chartGroup.append("text")
-            .attr("transform", `translate(${svgWidth / 2}, ${svgHeight + margin.top + 30})`)
+            .attr("transform", `translate(${svgWidth / 2}, 650)`)
             .attr("class", "axisText")
             .text("Obesity Rate (%)");
     
@@ -110,8 +118,12 @@ function makeResponsive() {
         // Create tooltip in the chart 
         chartGroup.call(toolTip); 
         CirclesGroup.on("click", function(data) {
+            toolTip.show(data, this);
+        })
+
+        .on("mouseout", function(data, index) {
             toolTip.hide(data);
-        });
+        })
     });
     
     }

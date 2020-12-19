@@ -44,11 +44,11 @@ function makeResponsive() {
     
         // Create scale functions 
         var xLinearScale = d3.scaleLinear()
-            .domain(d3.extent(CensusData, d => d.healthcare))
+            .domain(d3.extent(CensusData, d => d.obesity))
             .range([0, svgWidth]);
     
         var yLinearScale = d3.scaleLinear()
-            .domain([0, d3.max(CensusData, d => d.obesity)])
+            .domain([0, d3.max(CensusData, d => d.healthcare)])
             .range([svgHeight, 0]);
     
         // Creates axes 
@@ -68,8 +68,8 @@ function makeResponsive() {
             .data(CensusData)
             .enter() 
             .append("circle")
-            .attr("cx", d => xLinearScale(d.healthcare))
-            .attr("cy", d => yLinearScale(d.obesity)) 
+            .attr("cx", d => xLinearScale(d.obesity))
+            .attr("cy", d => yLinearScale(d.healthcare)) 
             .attr("r", "15") 
             .attr("fill", "blue")
             .attr("opacity", "0.5");
@@ -80,10 +80,10 @@ function makeResponsive() {
         // Create labels for the axes 
         CircleLabels
             .attr("x", function(d) {
-                return xLinearScale(d.healthcare);
+                return xLinearScale(d.obesity);
             })
             .attr("y", function(d) {
-                return yLinearScale(d.obesity);
+                return yLinearScale(d.healthcare);
             })
             .text(function(d) {
                 return d.abbr;

@@ -44,8 +44,8 @@ function makeResponsive() {
             .range([svgHeight, 0]);
     
         // Creates axes 
-        var xAxis = d3.axisBottom(xLinearScale).ticks(10);
-        var yAxis = d3.axisLeft(yLinearScale).ticks(10);
+        var xAxis = d3.axisBottom(xLinearScale);
+        var yAxis = d3.axisLeft(yLinearScale);
     
         // append axes 
         chartGroup.append("g")
@@ -61,7 +61,7 @@ function makeResponsive() {
             .enter() 
             .append("Circle")
             .attr("cx", d => xLinearScale(d.healthcare))
-            .attr("cy", d => yLinearSCale(d.obesity)) 
+            .attr("cy", d => yLinearScale(d.obesity)) 
             .attr("r", "10") 
             .attr("fill", "blue")
             .attr("opacity", "0.5");
@@ -115,5 +115,6 @@ function makeResponsive() {
     });
     
     }
-        makeResponsive();
+        
+makeResponsive();
     

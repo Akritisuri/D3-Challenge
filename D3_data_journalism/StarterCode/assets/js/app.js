@@ -54,7 +54,9 @@ d3.csv(file).then(function(CensusData) {
     chartGroup.append("g")
         .call(yAxis);
     
-    // Create the circles
+    // Create the circles 
+    var CirclesGroup = chartGroup.selectAll("Circle")
+        .data(CensusData)
 
     // Add the state labels to the circles 
 

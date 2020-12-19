@@ -71,10 +71,10 @@ d3.csv(file).then(function(CensusData) {
     // Create labels for the axes 
     CircleLabels
         .attr("x", function(d) {
-            return xLinearScale(d.poverty);
+            return xLinearScale(d.healthcare);
         })
         .attr("y", function(d) {
-            return yLinearScale(d.healthcare);
+            return yLinearScale(d.obesity);
         })
         .text(function(d) {
             return d.abbr;
@@ -96,7 +96,7 @@ d3.csv(file).then(function(CensusData) {
     chartGroup.append("text")
         .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
         .attr("class", "axisText")
-        .text("In Poverty (%)");
+        .text("Obesity Rate (%)");
 
     // Initialize tooltip
     
